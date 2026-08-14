@@ -1,0 +1,586 @@
+/* ============================================
+   Tactical Communications System
+   ============================================ */
+
+/* ===== 菜单按钮 ===== */
+.menu-bar-walkie-btn {
+    cursor: pointer ;
+}
+.menu-bar-walkie-btn:hover {
+    background-color: var(--text) ;
+    color: var(--bg) ;
+}
+.menu-bar-walkie-btn .btn-label {
+    display: inline ;
+    margin-left: .3em ;
+}
+@media (max-width: 672px) {
+    .menu-bar-walkie-btn .btn-label {
+        display: none ;
+    }
+}
+
+/* ===== 面板 ===== */
+.walkie-panel {
+    pointer-events: auto ;
+    display: flex ;
+    flex-direction: column ;
+    background: var(--bg) ;
+    height: 100% ;
+    width: 100% ;
+    position: relative ;
+    overflow: hidden ;
+    user-select: none !important;
+    -webkit-user-select: none !important;
+    -moz-user-select: none !important;
+    -ms-user-select: none !important;
+}
+.walkie-panel.walkie-desktop {
+    position: fixed ;
+    top: 0 ;
+    right: 0 ;
+    height: 100vh ;
+    width: 450px ;
+    max-width: 90vw ;
+    border-left: 2px solid var(--text) ;
+    backdrop-filter: blur(4px) ;
+    animation: walkieSlideRight 0.3s ease-out ;
+    box-shadow: -8px 0 40px rgba(0,0,0,0.3) ;
+    z-index: 10 ;
+}
+.walkie-panel.walkie-desktop.walkie-closing {
+    animation: walkieSlideLeft 0.3s ease-in forwards ;
+}
+.walkie-panel.walkie-mobile {
+    position: fixed ;
+    bottom: 0 ;
+    left: 0 ;
+    right: 0 ;
+    height: 99.8% ;
+    border-radius: 12px 12px 0 0 ;
+    border: 1px solid var(--text) ;
+    border-bottom: none ;
+    backdrop-filter: blur(4px) ;
+    animation: walkieSlideUp 0.3s ease-out ;
+    box-shadow: 0 -8px 40px rgba(0,0,0,0.3) ;
+    z-index: 10 ;
+    overflow: hidden ;
+}
+.walkie-panel.walkie-mobile.walkie-closing {
+    animation: walkieSlideDown 0.3s ease-in forwards ;
+}
+.walkie-panel > * {
+    flex-shrink: 0 ;
+}
+.walkie-panel .walkie-history-section {
+    flex-shrink: 1 ;
+    min-height: 0 ;
+    overflow: hidden ;
+}
+.walkie-panel .walkie-history-list {
+    overscroll-behavior: contain ;
+    -webkit-overflow-scrolling: touch ;
+}
+
+@keyframes walkieSlideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+@keyframes walkieSlideDown {
+    from { transform: translateY(0); }
+    to { transform: translateY(100%); }
+}
+@keyframes walkieSlideRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+}
+@keyframes walkieSlideLeft {
+    from { transform: translateX(0); }
+    to { transform: translateX(100%); }
+}
+@keyframes walkiePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ===== 面板头部 ===== */
+.walkie-panel-header {
+    display: flex ;
+    justify-content: space-between ;
+    align-items: center ;
+    padding: 10px 16px ;
+    border-bottom: 1px solid var(--faint-contrast) ;
+    flex-shrink: 0 ;
+    background: var(--bg) ;
+}
+.walkie-panel-title {
+    display: flex ;
+    align-items: center ;
+    gap: 12px ;
+    font-weight: bold ;
+    font-size: 15px ;
+    color: var(--text) ;
+    letter-spacing: 1px ;
+}
+.walkie-status {
+    font-size: 11px ;
+    font-weight: normal ;
+    padding: 2px 10px ;
+    border-radius: 10px ;
+}
+.walkie-status.online {
+    color: var(--good-contrast) ;
+}
+.walkie-status.offline {
+    color: var(--bad-contrast) ;
+}
+.walkie-close-btn {
+    background: none ;
+    border: none ;
+    color: var(--text) ;
+    font-size: 20px ;
+    cursor: pointer ;
+    padding: 0 6px ;
+    opacity: 0.5 ;
+}
+.walkie-close-btn:hover {
+    opacity: 1 ;
+}
+
+/* ===== 波形示波器 ===== */
+.walkie-waveform-container {
+    flex-shrink: 0 ;
+    min-height: 68px ;
+    background: rgba(0,0,0,0.2) ;
+    border-bottom: 1px solid rgba(255,255,255,0.04) ;
+    display: flex ;
+    align-items: center ;
+    justify-content: center ;
+}
+.walkie-waveform {
+    width: 100% ;
+    height: 120px ;
+    display: block ;
+    border-radius: 4px ;
+    background: rgba(0,0,0,0.35) ;
+    border: 1px solid rgba(60,255,60,0.06) ;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.3) ;
+}
+
+/* ===== 状态显示行 ===== */
+.walkie-status-display {
+    padding: 6px 16px ;
+    border: 1px solid var(--faint-contrast) ;
+    flex-shrink: 0 ;
+    min-height: 40px ;
+    display: flex ;
+    flex-wrap: wrap ;
+    align-items: center ;
+    justify-content: space-between ;
+    gap: 6px ;
+    font-weight: normal ;
+    font-size: 12px ;
+}
+/* ===== 状态显示行 ===== */
+.walkie-status-left {
+    display: flex ;
+    align-items: center ;
+    gap: 10px ;
+    flex: 1 ;
+    min-width: 100px ;
+}
+.walkie-status-icon {
+    font-size: 14px ;
+}
+.walkie-status-icon.pulse {
+    animation: walkiePulse 0.8s infinite ;
+}
+.walkie-status-text {
+    font-weight: 500 ;
+    color: #44ff89b9 ; 
+}
+
+/* 信号质量警告时文字颜色 */
+.walkie-status-text.warning {
+    color: #ffaa44 !important;
+}
+.walkie-status-text.offline {
+    color: #ff4444 !important;  /* 红色 */
+}
+
+/* ===== Offline 状态独立红色 ===== */
+.walkie-status.offline {
+    color: #ff4444 !important;
+}
+.walkie-status .walkie-status-label.offline {
+    color: #ff4444 !important;
+}
+
+/* ===== 背景噪音开关 (SQ) ===== */
+.walkie-noise-toggle {
+    display: flex ;
+    align-items: center ;
+    gap: 5px ;
+    cursor: pointer ;
+    font-size: 11px ;
+    color: var(--text) ;
+    opacity: 0.4 ;
+    user-select: none ;
+    flex-shrink: 0 ;
+    padding: 3px 8px ;
+    border-radius: 4px ;
+    transition: opacity 0.2s ;
+    margin-left: 4px ;
+}
+.walkie-noise-toggle:hover {
+    opacity: 0.8 ;
+}
+.walkie-noise-toggle input[type="checkbox"] {
+    cursor: pointer ;
+    width: 10px ;
+    height: 10px ;
+    accent-color: var(--good-contrast) ;
+}
+.walkie-noise-toggle.active {
+    opacity: 1 ;
+    color: var(--good-contrast) ;
+}
+.walkie-noise-toggle .noise-label {
+    font-size: 10px ;
+    letter-spacing: 0.5px ;
+    font-weight: 500 ;
+}
+
+/* ===== Toast 内联显示在 Comm Log 右侧 ===== */
+.walkie-history-header {
+    display: flex ;
+    justify-content: space-between ;
+    align-items: center ;
+    padding: 4px 16px ;
+    border-bottom: 1px solid var(--faint-contrast) ;
+    flex-shrink: 0 ;
+    font-size: 11px ;
+    color: var(--text) ;
+    letter-spacing: 0.5px ;
+}
+.walkie-history-header-right {
+    display: flex ;
+    align-items: center ;
+    gap: 8px ;
+}
+.walkie-toast-inline {
+    font-size: 10px ;
+    color: var(--good-contrast) ;
+    letter-spacing: 0.3px ;
+    white-space: nowrap ;
+    max-width: 180px ;
+    overflow: hidden ;
+    text-overflow: ellipsis ;
+}
+
+/* ===== PTT Button ===== */
+.walkie-ptt-btn {
+    margin: 6px 10px 2px 10px ;
+    padding: 12px 24px ;
+    border: 3px solid var(--text) ;
+    border-radius: 12px ;
+    background: var(--bg) ;
+    color: var(--text) ;
+    font-size: 45px ;
+    font-weight: bold ;
+    cursor: pointer ;
+    transition: all 0.2s ;
+    flex-shrink: 0 ;
+    user-select: none ;
+    touch-action: none ;
+    min-height: 120px ;
+    letter-spacing: 2px ;
+}
+.walkie-ptt-btn:hover:not(:disabled) {
+    background: rgba(255,68,68,0.08) ;
+}
+
+.walkie-ptt-btn:hover {
+    border-color: #ff4444 ;
+    color: #ff4444 ;
+    background: rgba(255,68,68,0.08) ;
+}
+
+.walkie-ptt-btn.broadcasting {
+    border-color: #ff4444 ;
+    color: #ff4444 ;
+    background: rgba(255,68,68,0.08) ;
+}
+.walkie-ptt-btn.listening {
+    border-color: var(--good-contrast) ;
+    color: var(--good-contrast) ;
+    background: rgba(145, 255, 0, 0.185) ;
+}
+.walkie-ptt-btn.recording {
+    color: #ff4444 ;
+    border-color: #ff4444 ;
+    transform: scale(0.97) ;
+}
+.walkie-ptt-btn:disabled {
+    opacity: 0.6 ;
+    cursor: not-allowed ;
+    color: #ff4444 ;
+    border-color: #ff4444 ;
+}
+
+/* ===== Help Text ===== */
+.walkie-help {
+    padding: 0 20px 6px 20px ;
+    font-size: 10px ;
+    color: var(--text) ;
+    opacity: 0.3 ;
+    flex-shrink: 0 ;
+    display: flex ;
+    gap: 12px ;
+    justify-content: center ;
+    letter-spacing: 0.5px ;
+}
+.walkie-interrupt-hint {
+    color: var(--good-contrast) ;
+    opacity: 0.6 ;
+}
+
+/* ===== History Section ===== */
+.walkie-history-section {
+    flex: 1 ;
+    overflow: hidden ;
+    display: flex ;
+    flex-direction: column ;
+    border-top: 1px solid var(--faint-contrast) ;
+    min-height: 0 ;
+}
+.walkie-history-refresh {
+    background: none ;
+    border: none ;
+    color: var(--text) ;
+    cursor: pointer ;
+    font-size: 13px ;
+    padding: 0 4px ;
+    opacity: 0.4 ;
+}
+.walkie-history-refresh:hover {
+    opacity: 1 ;
+}
+.walkie-history-list {
+    flex: 1 ;
+    overflow-y: auto ;
+    padding: 4px 8px ;
+    overscroll-behavior: contain ;
+    -webkit-overflow-scrolling: touch ;
+}
+.walkie-history-list::-webkit-scrollbar {
+    width: 3px ;
+}
+.walkie-history-list::-webkit-scrollbar-track {
+    background: transparent ;
+}
+.walkie-history-list::-webkit-scrollbar-thumb {
+    background: var(--faint-contrast) ;
+    border-radius: 2px ;
+}
+.walkie-history-empty {
+    text-align: center ;
+    color: var(--text) ;
+    opacity: 0.25 ;
+    padding: 20px ;
+    font-size: 11px ;
+}
+.walkie-toggle-group {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.walkie-toggle-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 2px 8px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 11px;
+    color: var(--text-muted, #888);
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    user-select: none;
+    transition: all 0.2s ease;
+}
+.walkie-toggle-label.active {
+    color: var(--good-contrast, #44ff89b9);
+    border-color: #44ff895e;
+    background: #44ff8913;
+}
+.walkie-toggle-label input[type="checkbox"] {
+    display: none;
+}
+.toggle-label-text {
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 历史记录项样式 */
+.walkie-history-item {
+    display: flex ;
+    align-items: center ;
+    gap: 8px ;
+    padding: 8px 12px ;
+    border-radius: 4px ;
+    cursor: pointer ;
+    transition: background 0.15s ;
+    font-size: 12px ;
+    color: var(--text) ;
+    border-bottom: 1px solid var(--faint-contrast) ;
+    min-height: 17px;
+}
+.walkie-history-item:hover {
+    background: rgba(183, 255, 68, 0.08) ;
+}
+.walkie-history-item.playing {
+    background: rgba(100, 255, 100, 0.08) ;
+}
+.walkie-history-status {
+    font-size: 12px ;
+    width: 16px ;
+    text-align: center ;
+    flex-shrink: 0 ;
+    opacity: 0.6 ;
+}
+.walkie-history-time {
+    font-size: 11px ;
+    color: var(--text) ;
+    flex-shrink: 0 ;
+}
+.walkie-history-sep {
+    color: var(--text) ;
+    opacity: 0.6 ;
+    flex-shrink: 0 ;
+}
+.walkie-history-name {
+    font-weight: 500 ;
+    flex: 1 ;
+    font-size: 12px ;
+}
+.walkie-history-duration {
+    font-size: 11px ;
+    color: var(--text) ;
+    flex-shrink: 0 ;
+    font-variant-numeric: tabular-nums ;
+}
+.walkie-history-play {
+    font-size: 11px ;
+    flex-shrink: 0 ;
+    width: 20px ;
+    text-align: center ;
+}
+.walkie-history-item.playing .walkie-history-play {
+    opacity: 1 ;
+    color: var(--good-contrast) ;
+}
+
+/* ===== 信号质量警告样式 ===== */
+.walkie-status-warning {
+    color: #ffaa44 !important;
+    animation: signalWarning 1s ease-in-out infinite;
+}
+.walkie-status-offline {
+    color: #ff4444 !important;
+    animation: signalOffline 1.5s ease-in-out infinite;
+}
+@keyframes signalWarning {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+@keyframes signalOffline {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* ===== Toast 错误消息 - 麦克风不可用红色闪烁 ===== */
+.walkie-toast-error {
+    color: #ff4444 !important;
+    font-weight: bold;
+    border-left: 3px solid #ff4444;
+    padding-left: 8px;
+}
+.walkie-toast-inline-error {
+    color: #ff4444 !important;
+    font-weight: bold;
+    animation: toastErrorBlink 0.6s ease-in-out infinite;
+}
+@keyframes toastErrorBlink {
+    0%, 100% { 
+        opacity: 1;
+        text-shadow: 0 0 8px rgba(255, 68, 68, 0.3);
+    }
+    50% { 
+        opacity: 0.3;
+        text-shadow: 0 0 20px rgba(255, 68, 68, 0.6);
+    }
+}
+
+/* ===== Online状态 ===== */
+.walkie-status {
+    gap: 3px;
+    font-size: 10px;
+    padding: 1px 6px;
+    opacity: 0.8;
+}
+.walkie-status.online {
+    color: #44ff89b9;
+}
+.walkie-status.offline {
+    color: #ff4444;
+}
+.walkie-status-dot {
+    font-size: 10px;
+}
+.walkie-status-label {
+    font-size: 10px;
+    letter-spacing: 0.3px;
+    opacity: 0.7;
+}
+
+/* ===== 信号格指示器 ===== */
+.walkie-signal-bars {
+    display: inline-flex;
+    align-items: flex-end;
+    gap: 2px;
+    height: 6px;
+    padding: 0 4px;
+    margin-left: -14px;
+}
+.signal-bar {
+    display: block;
+    width: 3px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 1px;
+    transition: all 0.3s ease;
+}
+.signal-bar:nth-child(1) { height: 2px; }
+.signal-bar:nth-child(2) { height: 5px; }
+.signal-bar:nth-child(3) { height: 8px; }
+.signal-bar:nth-child(4) { height: 11px; }
+.signal-bar.active {
+    background: #44ff89b9;
+    box-shadow: 0 0 4px rgba(68, 255, 136, 0.3);
+}
+.walkie-signal-bars.poor .signal-bar.active {
+    background: #ffaa44;
+    box-shadow: 0 0 4px rgba(255, 170, 68, 0.3);
+    animation: signalPulse 0.8s ease-in-out infinite;
+}
+.walkie-signal-bars.offline .signal-bar.active {
+    background: #ff4444;
+    box-shadow: 0 0 4px rgba(255, 68, 68, 0.3);
+    animation: signalPulse 0.5s ease-in-out infinite;
+}
+@keyframes signalPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
