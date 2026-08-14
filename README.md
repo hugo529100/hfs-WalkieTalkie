@@ -1,6 +1,9 @@
+<img width="1080" height="2400" alt="Screenshot_2026-08-14-08-55-44-426_com android chrome" src="https://github.com/user-attachments/assets/1e3a7801-eb83-45ff-9368-1d17b00125be" />
 
 
-<img width="1080" height="2400" alt="Screenshot_2026-08-14-08-45-13-370_com android chrome" src="https://github.com/user-attachments/assets/816510ff-286e-4059-8d97-05dabff2504d" />
+
+https://github.com/user-attachments/assets/dcad2748-968f-44a1-9312-b652a20fd9c9
+"The background noise (SQ) heard in the demonstration video is just a placeholder recording (noise.mp3). You can customize it by replacing the file with your own preferred audio recording."
 
 
 WalkieTalkie Plugin - Tactical Communications System
