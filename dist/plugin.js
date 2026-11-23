@@ -1,6 +1,6 @@
 exports.version = 2.1
 exports.description = "Tactical Communications System - Real-time voice broadcast with PTT"
-exports.repo = "Hug3O/WalkieTalkie"
+exports.repo = "hugo529100/hfs-WalkieTalkie"
 exports.apiRequired = 8.87
 exports.frontend_js = ['main.js']
 exports.frontend_css = ['style.css']
